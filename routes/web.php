@@ -24,7 +24,6 @@ Route::group(['middleware' => 'auth'], function () {
             return view('dashboard');
         })->name('dashboard');
 
-
     });
 
     Route::group(['prefix' => '/profile'], function () {

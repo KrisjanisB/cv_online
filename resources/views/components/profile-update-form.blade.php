@@ -3,7 +3,7 @@
     <div class="w-full sm:max-w-md mt-6 py-4 overflow-hidden sm:rounded-lg">
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{route('profile.store')}}">
+        <form method="POST" action="{{route('store')}}">
             @csrf
 
             <!-- Phone -->
