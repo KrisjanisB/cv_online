@@ -3,7 +3,7 @@
 
             <div class="max-w-7xl mx-auto px-6 lg:px-8 mb-4">
                 <div class="bg-white overflow-hidden shadow-sm rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200 flex justify-between">
+                    <div class="p-6 bg-white border-b border-gray-200 flex flex-col md:flex-row justify-between ">
                         <p>Welcome to <strong>CV - MARKET</strong> ! </p>
                         @guest
                         <p>If you wish to upload your CV, please <a href="{{route('login')}}" class="text-indigo-600">
@@ -11,7 +11,7 @@
                             or <a href="{{route('register')}}" class="text-indigo-600"> register</a>.</p>
                         @endguest
                         @auth
-                            <x-link href="{{route('cv.create')}}"> {{__('Lets add a new CV')}} </x-link>
+                            <x-link class="mt-2 flex justify-center" href="{{route('cv.create')}}"> {{__('Lets add a new CV')}} </x-link>
                         @endauth
                     </div>
                 </div>
@@ -30,10 +30,10 @@
                                     <th scope="col" class="py-3 px-6">
                                         {{__('Submitter')}}
                                     </th>
-                                    <th scope="col" class="py-3 px-6">
+                                    <th scope="col" class="py-3 px-6 hidden md:table-cell">
                                         {{__('Residence')}}
                                     </th>
-                                    <th scope="col" class="py-3 px-6">
+                                    <th scope="col" class="py-3 px-6 hidden md:table-cell">
                                         {{__('Last updated')}}
                                     </th>
 
