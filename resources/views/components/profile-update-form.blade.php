@@ -1,6 +1,6 @@
 <div class="flex flex-col pt-6 sm:pt-0">
 
-    <div class="w-full sm:max-w-md mt-6 py-4 overflow-hidden sm:rounded-lg">
+    <div class="w-full  mt-6 py-4 overflow-hidden sm:rounded-lg">
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
         <form method="POST" action="{{route('store')}}">
@@ -37,7 +37,7 @@
 
             <!-- Zip -->
             <div class="mt-4">
-                <x-label for="zip" :value="__('Zip code')" />
+                <x-label for="zip" :value="__('Postal code')" />
 
                 <x-input id="zip" class="block mt-1 w-full" type="text" name="zip" :value="old('zip')"  />
             </div>

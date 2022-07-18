@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class CV extends Model
 {
@@ -11,14 +12,14 @@ class CV extends Model
 
     protected $fillable = [
         'user_id',
-        'is_active',
         'is_published',
         'is_draft',
     ];
 
     protected $appends = [
         'education',
-        'workExperiance',
+        'work',
+        'user_is_owner'
     ];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -28,12 +29,26 @@ class CV extends Model
 
     public function education(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Education::class, 'cv_id');
+        return $this->hasMany(Education::class, 'cv_id')->orderBy('order', 'asc');
     }
 
-    public function workExperiance(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function work(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(WorkExperience::class, 'cv_id');
+        return $this->hasMany(WorkExperience::class, 'cv_id')->orderBy('order', 'asc');
+    }
+
+   public function scopePublicAccessable($query)
+    {
+        return $query->where('is_draft', false)
+            ->where('is_published', true)
+            ->orderBy('created_at', 'desc')
+            ->with('user:id,name,email,surname')
+            ->with('user.profile:id,user_id,city,country,address,phone');
+    }
+
+    public function scopeOwner($query)
+    {
+        return $this->scopePublicAccessable();
     }
 
     public function getEducationAttribute()
@@ -41,8 +56,22 @@ class CV extends Model
         return $this->education()->orderBy('order', 'desc')->get();
     }
 
-    public function getWorkExperianceAttribute()
+    public function getWorkAttribute()
     {
-        return $this->workExperiance()->orderBy('order', 'desc')->get();
+        return $this->work()->orderBy('order', 'desc')->get();
+    }
+
+    public function getUserIsOwnerAttribute()
+    {
+        if (Auth::id() == $this->user_id) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updatePublishedState()
+    {
+        $this->is_published = !$this->is_published;
     }
 }

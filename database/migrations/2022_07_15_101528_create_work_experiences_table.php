@@ -15,13 +15,13 @@ class CreateWorkExperiencesTable extends Migration
     {
         Schema::create('work_experiences', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cv_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('cv_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('employer');
             $table->string('position');
             $table->text('description')->nullable();
             $table->date('start_date');
-            $table->date('end_date');
+            $table->date('end_date')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
             $table->boolean('is_full_time')->default(true);

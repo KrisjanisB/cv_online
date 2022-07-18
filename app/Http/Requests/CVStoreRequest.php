@@ -30,24 +30,24 @@ class CVStoreRequest extends FormRequest
      */
     public function rules()
     {
-//dd($this->all());
+
         return [
             'work' => 'array|min:1',
             'work.*.position' => 'required|max:255',
             'work.*.employer' => 'required|max:255',
-            'work.*.country' => 'max:255',
-            'work.*.city' => 'max:255',
-            'work.*.start_date' => 'date',
-            'work.*.end_date' => 'date',
+            'work.*.country' => 'nullable|max:255',
+            'work.*.city' => 'nullable|max:255',
+            'work.*.start_date' => 'nullable|date',
+            'work.*.end_date' => 'nullable|date',
             'work.*.description' => 'nullable|max:500',
             'work.*.is_finished' => 'boolean',
             'education' => 'array|min:1',
-            'education.*.institution' => 'max:255',
-            'education.*.faculty' => 'max:255',
-            'education.*.speciality' => 'max:255',
+            'education.*.institution' => 'required|max:255',
+            'education.*.faculty' => 'nullable|max:255',
+            'education.*.speciality' => 'nullable|max:255',
             'education.*.degree' => 'required|string',
-            'education.*.start_date' => 'date',
-            'education.*.end_date' => 'date',
+            'education.*.start_date' => 'nullable|date',
+            'education.*.end_date' => 'nullable|date',
             'education.*.description' => 'nullable|max:500',
             'education.*.country' => 'max:255',
             'education.*.is_finished' => 'boolean',
@@ -56,13 +56,23 @@ class CVStoreRequest extends FormRequest
         ];
     }
 
-//    protected function prepareForValidation()
-//    {
-//        $this->merge([
-//            'is_finished' => $this->boolean('is_finished'),
-//            'is_active' => $this->boolean('is_active'),
-//        ]);
-//    }
+    protected function prepareForValidation()
+    {
 
+
+        // Remove empty arrays from request
+        foreach ($this->work as $array) {
+            if (is_array($array) && $array['position'] == null) {
+                $this->offsetUnset('work');
+            }
+        }
+
+        foreach ($this->education as $array) {
+            if (is_array($array) && $array['institution'] == null) {
+                $this->offsetUnset('education');
+            }
+        }
+
+    }
 
 }

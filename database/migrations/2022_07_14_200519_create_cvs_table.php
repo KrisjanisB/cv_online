@@ -15,10 +15,10 @@ class CreateCVSTable extends Migration
     {
         Schema::create('cvs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->index();
-            $table->boolean('is_active')->default(false);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->boolean('is_published')->default(false);
             $table->boolean('is_draft')->default(true);
+            $table->integer('views')->default(0);
             $table->timestamps();
         });
     }

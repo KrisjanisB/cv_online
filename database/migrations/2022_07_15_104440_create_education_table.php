@@ -15,15 +15,15 @@ class CreateEducationTable extends Migration
     {
         Schema::create('education', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cv_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('cv_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('institution');
             $table->string('faculty')->nullable();
             $table->enum('degree', ['Basic','Secondary','Vocational','Bachelor', 'Master', 'PhD'])->default('Basic');
             $table->string('speciality')->nullable();
             $table->text('description')->nullable();
             $table->date('start_date');
-            $table->date('end_date');
+            $table->date('end_date')->nullable();
             $table->string('country')->nullable();
             $table->boolean('is_finished')->default(true);
             $table->boolean('is_active')->default(false);

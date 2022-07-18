@@ -41,6 +41,7 @@ addNewItemButtons.forEach(function (item) {
         let nr = parseInt(lastNode.dataset.fieldId);
         let clone = lastNode.cloneNode(true);
         clearInputs(clone, nr);
+        clone.dataset.fieldId = nr + 1;
         clone.querySelector(".delete-input").classList.remove("hidden");
         clone.classList.add("mt-4");
         item.before(clone);
@@ -63,6 +64,7 @@ function clearInputs(clone, nr) {
 
         if (item.getAttribute("type") === "checkbox") {
             item.checked = false;
+
         } else if (item.tagName === "SELECT") {
             item.value = "Please Select Appropriate";
         } else {
@@ -72,3 +74,65 @@ function clearInputs(clone, nr) {
         item.name = item.name.replace(/\[\d+\]/, `[${nr + 1}]`);
     });
 }
+
+const eductionLevelSelect = document.querySelector("#education");
+const fieldGroups = document.querySelectorAll("[data-field-group]");
+const event = new Event("change");
+fieldGroups.forEach(function (fieldGroup) {
+    const groupType = fieldGroup.dataset.fieldGroup;
+
+    fieldGroup.addEventListener("change", function (e) {
+
+        // check education level, show appropriate fields
+        if (e.target.classList.contains("higher-education-select")) {
+            const selectEl = e.target;
+            const educationLevel = selectEl.value;
+            const id = selectEl.getAttribute("name").split("[")[1].split("]")[0];
+
+            const fieldSet = fieldGroup.querySelector("[data-field-id=\"" + id + "\"]");
+            const inputs = fieldSet.querySelectorAll(".higher-education");
+
+            if (educationLevel === "Basic" || educationLevel === "Secondary") {
+                inputs.forEach(function (item) {
+                    item.classList.add("hidden");
+                    item.disabled = true;
+                    item.required = false;
+                });
+            } else {
+                inputs.forEach(function (item) {
+                    item.classList.remove("hidden");
+                    item.disabled = false;
+                    item.required = true;
+                });
+            }
+
+        }
+
+
+        // if work or education is active, disable end_date input
+        if (e.target.classList.contains("is_active")) {
+            const checkEl = e.target;
+            const id = checkEl.getAttribute("name").split("[")[1].split("]")[0];
+            const fieldSet = fieldGroup.querySelector("[data-field-id=\"" + id + "\"]");
+            const endDate = fieldSet.querySelector("[name=\"" + groupType + "[" + id + "][end_date]\"]");
+            const isActive = checkEl.checked;
+
+            if (isActive) {
+                endDate.classList.add("hidden");
+                endDate.disabled = true;
+            } else {
+                endDate.classList.remove("hidden");
+                endDate.disabled = false;
+            }
+        }
+    });
+});
+
+if(document.querySelector('.close-alert')){
+    document.querySelector('.close-alert').addEventListener("click", function () {
+        document.querySelector('.alert').classList.add("hidden");
+    });
+}
+
+
+
