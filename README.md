@@ -12,11 +12,12 @@ git clone
 
 composer install
 
-npm install && npm run prod
+cp .env.example .env
 
 php artisan key:generate
 
 php artisan migrate
 
+npm install && npm run prod
 
 [Please check Laravel docs for more details](https://laravel.com/docs/8.x/installation)
