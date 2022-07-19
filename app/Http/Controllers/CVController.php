@@ -117,7 +117,7 @@ class CVController extends Controller
             $cv->save();
         } else {
 
-            $this->updateUser($request->only([ 'city', 'country', 'zip','address' ]));
+            $this->updateUser($request->only(['city', 'country', 'zip', 'address']));
 
             $cv->work()->delete();
 
@@ -150,7 +150,7 @@ class CVController extends Controller
     }
 
 
-    public function print(CV $cv)
+    public function print(CV $cv): \Illuminate\Http\Response
     {
 
         $cv = CV::publicAccessable()->findOrFail($cv->id);
@@ -162,7 +162,7 @@ class CVController extends Controller
     }
 
 
-    private function incrementOrder($array)
+    private function incrementOrder($array): array
     {
 
         foreach ($array as $key => $value) {
@@ -171,7 +171,7 @@ class CVController extends Controller
         return $array;
     }
 
-    private function clearNulls($array, $needle)
+    private function clearNulls($array, $needle): array
     {
         foreach ($array as $key => $value) {
             if (is_array($value) && $value[$needle] == null) {
@@ -182,8 +182,12 @@ class CVController extends Controller
         return $array;
     }
 
-   // Update user and profile details
-    private function updateUser($data)
+    /**
+     * Update user data
+     *
+     * @param  $data
+     */
+    private function updateUser($data): void
     {
         $user = Auth::user();
 

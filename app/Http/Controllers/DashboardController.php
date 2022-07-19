@@ -10,14 +10,14 @@ class DashboardController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request)
     {
 
         $user = Auth::user();
-        $user->load(['cv'=> function ($query){
+        $user->load(['cv' => function ($query) {
             $query->orderBy('is_published', 'desc');
         }]);
         $cvs = $user->cv;

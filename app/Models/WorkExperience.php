@@ -48,8 +48,8 @@ class WorkExperience extends Model
 
     public function getFormatedDateAttribute(): string
     {
-        if($this->end_date != null && !$this->is_active) {
-            return $this->start_date->format('d/m/Y') . ' - ' .  $this->end_date->format('d/m/Y');
+        if ($this->end_date != null && !$this->is_active) {
+            return $this->start_date->format('d/m/Y') . ' - ' . $this->end_date->format('d/m/Y');
         } else {
             return $this->start_date->format('d/m/Y') . ' - ' . 'Present';
         }

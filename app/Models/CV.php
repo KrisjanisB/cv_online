@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,7 +36,7 @@ class CV extends Model
         return $this->hasMany(WorkExperience::class, 'cv_id')->orderBy('order', 'asc');
     }
 
-   public function scopePublicAccessable($query)
+    public function scopePublicAccessable($query)
     {
         return $query->where('is_draft', false)
             ->where('is_published', true)
@@ -51,17 +50,17 @@ class CV extends Model
         return $this->scopePublicAccessable();
     }
 
-    public function getEducationAttribute()
+    public function getEducationAttribute(): \Illuminate\Database\Eloquent\Collection
     {
         return $this->education()->orderBy('order', 'desc')->get();
     }
 
-    public function getWorkAttribute()
+    public function getWorkAttribute(): \Illuminate\Database\Eloquent\Collection
     {
         return $this->work()->orderBy('order', 'desc')->get();
     }
 
-    public function getUserIsOwnerAttribute()
+    public function getUserIsOwnerAttribute(): bool
     {
         if (Auth::id() == $this->user_id) {
             return true;

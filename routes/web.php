@@ -25,21 +25,18 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::group(['prefix' => '/profile'], function () {
+
         Route::resource('/', \App\Http\Controllers\ProfileController::class);
 
         Route::post('/cv', [\App\Http\Controllers\CVController::class, 'store'])->name('cv.store');
         Route::delete('/cv/{cv}', [\App\Http\Controllers\CVController::class, 'destroy'])->name('cv.delete');
-        Route::get('/add-cv', [\App\Http\Controllers\CVController::class,'create'])->name('cv.create');
-        Route::get('/cv/{cv}/edit', [\App\Http\Controllers\CVController::class,'edit'])->name('cv.edit');
+        Route::get('/add-cv', [\App\Http\Controllers\CVController::class, 'create'])->name('cv.create');
+        Route::get('/cv/{cv}/edit', [\App\Http\Controllers\CVController::class, 'edit'])->name('cv.edit');
         Route::get('/cv/{cv}', [\App\Http\Controllers\CVController::class, 'show'])->name('cv.show');
         Route::put('/cv/{cv}', [\App\Http\Controllers\CVController::class, 'update'])->name('cv.update');
         Route::patch('/cv/{cv}', [\App\Http\Controllers\CVController::class, 'update'])->name('cv.update-published');
 
-
     });
-
-
-
 
 });
 

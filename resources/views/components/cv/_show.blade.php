@@ -58,25 +58,25 @@
                         <tr class="bg-white ">
                             <th scope="row" align="left"
                                 class="px-6 font-bold text-gray-900  ">
-                                {{$user->full_name}}
+                                {{$cv->user->full_name}}
                             </th>
                         </tr>
                         <tr class="bg-white" align="left">
                             <th scope="row"
                                 class="px-6 font-bold text-gray-900  ">
-                                {{$user->profile->phone}}
+                                {{$cv->user->profile->phone}}
                             </th>
                         </tr>
                         <tr class="bg-white" align="left">
                             <th scope="row"
                                 class="px-6 font-bold text-gray-900  ">
-                                {{$user->email}}
+                                {{$cv->user->email}}
                             </th>
                         </tr>
                         <tr class="bg-white" align="left">
                             <th scope="row"
                                 class="px-6 font-bold text-gray-900  ">
-                                {{$user->profile->full_address}}
+                                {{$cv->user->profile->full_address}}
                             </th>
                         </tr>
                         </tbody>
